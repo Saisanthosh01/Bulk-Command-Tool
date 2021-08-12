@@ -33,7 +33,7 @@ namespace FirstProject
         {
             this.topPanel = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
-            this.SingleFileebtn = new System.Windows.Forms.Button();
+            this.SingleFilebtn = new System.Windows.Forms.Button();
             this.folderSelectorbtn = new System.Windows.Forms.Button();
             this.Run_Btn = new System.Windows.Forms.Button();
             this.Drag_Button = new System.Windows.Forms.Button();
@@ -68,21 +68,21 @@ namespace FirstProject
             this.label2.Text = "Bulk Shell Command Tool";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // SingleFileebtn
+            // SingleFilebtn
             // 
-            this.SingleFileebtn.AutoSize = true;
-            this.SingleFileebtn.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.SingleFileebtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.SingleFileebtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.SingleFileebtn.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-            this.SingleFileebtn.Location = new System.Drawing.Point(66, 279);
-            this.SingleFileebtn.Margin = new System.Windows.Forms.Padding(0);
-            this.SingleFileebtn.Name = "SingleFileebtn";
-            this.SingleFileebtn.Size = new System.Drawing.Size(355, 55);
-            this.SingleFileebtn.TabIndex = 13;
-            this.SingleFileebtn.Text = "Click here to add single file";
-            this.SingleFileebtn.UseVisualStyleBackColor = false;
-            this.SingleFileebtn.Click += new System.EventHandler(this.SingleFileebtn_Click);
+            this.SingleFilebtn.AutoSize = true;
+            this.SingleFilebtn.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.SingleFilebtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.SingleFilebtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.SingleFilebtn.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+            this.SingleFilebtn.Location = new System.Drawing.Point(66, 279);
+            this.SingleFilebtn.Margin = new System.Windows.Forms.Padding(0);
+            this.SingleFilebtn.Name = "SingleFilebtn";
+            this.SingleFilebtn.Size = new System.Drawing.Size(355, 55);
+            this.SingleFilebtn.TabIndex = 13;
+            this.SingleFilebtn.Text = "Click here to add single file";
+            this.SingleFilebtn.UseVisualStyleBackColor = false;
+            this.SingleFilebtn.Click += new System.EventHandler(this.SingleFileebtn_Click);
             // 
             // folderSelectorbtn
             // 
@@ -182,7 +182,7 @@ namespace FirstProject
             this.button1.TabIndex = 22;
             this.button1.Text = "Clear All";
             this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button1.Click += new System.EventHandler(this.Button1_Click);
             // 
             // panel1
             // 
@@ -208,7 +208,7 @@ namespace FirstProject
             this.Controls.Add(this.Drag_Button);
             this.Controls.Add(this.Run_Btn);
             this.Controls.Add(this.folderSelectorbtn);
-            this.Controls.Add(this.SingleFileebtn);
+            this.Controls.Add(this.SingleFilebtn);
             this.Controls.Add(this.topPanel);
             this.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.MaximizeBox = false;
@@ -226,7 +226,7 @@ namespace FirstProject
         #endregion
         private System.Windows.Forms.Panel topPanel;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button SingleFileebtn;
+        private System.Windows.Forms.Button SingleFilebtn;
         private System.Windows.Forms.Button folderSelectorbtn;
         private System.Windows.Forms.Button Run_Btn;
         private System.Windows.Forms.Button Drag_Button;

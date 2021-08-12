@@ -7,11 +7,11 @@ namespace FirstProject
 {
     public partial class Form1 : Form
     {
-        public string[] d1 = new string[0];
-        public string[] d2 = new string[0];
+        public string[] fileNames = Array.Empty<string>();
+        public string[] filePaths = Array.Empty<string>();
         public int dcount = 0, drcount = 0, i, count;
-        public string singleFileFullPath, singleFilePath, singleFileName, folderPath, commandText;
-        public string[] directoryFiles, directoryFileNames, directoryFilePaths, dragFiles, dragFilePaths, dragFileNames, fileNames, filePaths;
+        public string singleFilePath,  folderPath, commandText;
+        public string[] directoryFiles,  dragFiles, dragBtnFiles, dragFilePaths, dragFileNames ;
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -19,15 +19,12 @@ namespace FirstProject
         }
 
         //Clear All files button
-        private void button1_Click(object sender, EventArgs e)
+        private void Button1_Click(object sender, EventArgs e)
         {
             filesListView.Clear();
-            singleFileFullPath = "";
-            dcount = 0;
-            drcount = 0;
+            commandTxt.Text = string.Empty;
+            filesListView.Columns.Add("Files Selected", 610, HorizontalAlignment.Left);
         }
-
-
 
         //Single file selection button
         private void SingleFileebtn_Click(object sender, EventArgs e)
@@ -42,10 +39,8 @@ namespace FirstProject
 
             if (singleFileDialog.ShowDialog() == DialogResult.OK)
             {
-                singleFileFullPath = singleFileDialog.FileName;
-                singleFilePath = Path.GetDirectoryName(singleFileFullPath);
-                singleFileName = Path.GetFileNameWithoutExtension(singleFileFullPath);
-                filesListView.Items.Add(singleFileFullPath);
+                singleFilePath = singleFileDialog.FileName;                
+                filesListView.Items.Add(singleFilePath);
             }
         }
 
@@ -59,20 +54,10 @@ namespace FirstProject
                 folderPath = folderBrowser.SelectedPath;
                 directoryFiles = Directory.GetFiles(folderPath);
                 dcount = directoryFiles.Length;
-                d1 = new string[dcount];
-                d2 = new string[dcount];
-                for (i = 0; i < dcount; i++)
-                {
-                    d1[i] = Path.GetDirectoryName(directoryFiles[i]);
-                    d2[i] = Path.GetFileName(directoryFiles[i]);
-                }
-                directoryFilePaths = (string[])d1.Clone();
-                directoryFileNames = (string[])d2.Clone();
                 foreach (string item in directoryFiles)
                 {
                     filesListView.Items.Add(item);
                 }
-
             }
         }
 
@@ -80,7 +65,7 @@ namespace FirstProject
         private void Run_Btn_Click(object sender, EventArgs e)
         {
             commandText = commandTxt.Text.ToString().Trim();
-            if (String.IsNullOrWhiteSpace(singleFileFullPath) && dcount < 1 && drcount < 1)
+            if (String.IsNullOrWhiteSpace(singleFilePath) && dcount < 1 && drcount < 1)
             {
                 MessageBox.Show("Please select input files to run the command", "Error");
             }
@@ -92,55 +77,15 @@ namespace FirstProject
                     int i;
                     if (!String.IsNullOrWhiteSpace(commandText))
                     {
-                        if (dcount >= 1 & drcount >= 1 & !String.IsNullOrWhiteSpace(singleFileFullPath))
+                        Array.Resize(ref fileNames, filesListView.Items.Count);
+                        Array.Resize(ref filePaths, filesListView.Items.Count);
+                        for (i=0;i<fileNames.Length;i++)
                         {
-                            var list = new List<string>();
-                            list.AddRange(directoryFileNames);
-                            list.AddRange(dragFileNames);
-                            fileNames = list.ToArray();
-                            var list1 = new List<string>();
-                            list1.AddRange(directoryFilePaths);
-                            list1.AddRange(dragFilePaths);
-                            filePaths = list1.ToArray();
-                            string[] finalCommand = new string[fileNames.Length];
-                            finalCommand[0] = commandText + " " + singleFilePath + " " + singleFileName;
-                            for (i = 1; i <= fileNames.Length; i++)
-                            {
-                                finalCommand[i] = commandText + " " + filePaths[i - 1] + " " + fileNames[i - 1];
-                            }
-                            try
-                            {
-                                for (i = 0; i < finalCommand.Length; i++)
-                                {
-                                    System.Diagnostics.Process.Start("CMD.exe", finalCommand[i]);
-                                }
-                            }
-                            catch (Exception runException)
-                            {
-                                MessageBox.Show("Unable to run the command" + finalCommand[i]);
-                                try
-                                {
-                                    StreamWriter sw = new StreamWriter(@"C:\Error_Log.txt");
-                                    sw.WriteLine(DateTime.Now);
-                                    sw.WriteLine("-----------------------");
-                                    sw.WriteLine(runException.Message);
-                                    sw.WriteLine("---------------------------------------------------");
-                                    sw.Close();
-                                }
-                                catch (Exception e1)
-                                {
-                                    MessageBox.Show("Exception caused in writing log: " + e1.Message);
-                                }
-                            }
+                            fileNames[i] =filesListView.Items[i].Text;
+                            fileNames[i] = Path.GetFileName(fileNames[i]);
+                            filePaths[i] = filesListView.Items[i].Text;
+                            filePaths[i]= Path.GetDirectoryName(filePaths[i]);
                         }
-                        else if (dcount < 1 & drcount >= 1 & String.IsNullOrWhiteSpace(singleFileFullPath))
-                        {
-                            var list = new List<string>();
-                            list.AddRange(dragFileNames);
-                            fileNames = list.ToArray();
-                            var list1 = new List<string>();
-                            list1.AddRange(dragFilePaths);
-                            filePaths = list1.ToArray();
                             string[] finalCommand = new string[fileNames.Length];
                             for (i = 0; i < fileNames.Length; i++)
                             {
@@ -150,12 +95,13 @@ namespace FirstProject
                             {
                                 for (i = 0; i < finalCommand.Length; i++)
                                 {
-                                    System.Diagnostics.Process.Start("CMD.exe", finalCommand[i]);
+                                System.Diagnostics.Process.Start("CMD.exe", finalCommand[i]);
+                                //MessageBox.Show(finalCommand[i]);
                                 }
                             }
                             catch (Exception runException)
                             {
-                                MessageBox.Show("Unable to run the command" + finalCommand[i]);
+                                MessageBox.Show("Unable to run the command" + finalCommand[i], "Error");
                                 try
                                 {
                                     StreamWriter sw = new StreamWriter(@"C:\Error_Log.txt");
@@ -167,201 +113,18 @@ namespace FirstProject
                                 }
                                 catch (Exception e1)
                                 {
-                                    MessageBox.Show("Exception caused in writing log: " + e1.Message);
+                                    MessageBox.Show("Exception caused in writing log: " + e1.Message, "Warning");
                                 }
-                            }
-                        }
-                        else if (dcount < 1 & drcount < 1 & !String.IsNullOrWhiteSpace(singleFileFullPath))
-                        {
-                            string finalCommand = commandText + " " + singleFilePath + " " + singleFileName;
-
-                            try
-                            {
-                                System.Diagnostics.Process.Start("CMD.exe", finalCommand);
-                            }
-                            catch (Exception runException)
-                            {
-                                MessageBox.Show("Unable to run the command" + finalCommand);
-                                try
-                                {
-                                    StreamWriter sw = new StreamWriter(@"C:\Error_Log.txt");
-                                    sw.WriteLine(DateTime.Now);
-                                    sw.WriteLine("-----------------------");
-                                    sw.WriteLine(runException.Message);
-                                    sw.WriteLine("---------------------------------------------------");
-                                    sw.Close();
-                                }
-                                catch (Exception e1)
-                                {
-                                    MessageBox.Show("Exception caused in writing log: " + e1.Message);
-                                }
-                            }
-                        }
-                        else if (dcount >= 1 & drcount < 1 & String.IsNullOrWhiteSpace(singleFileFullPath))
-                        {
-                            var list = new List<string>();
-                            list.AddRange(directoryFileNames);
-                            fileNames = list.ToArray();
-                            var list1 = new List<string>();
-                            list1.AddRange(directoryFilePaths);
-                            filePaths = list1.ToArray();
-                            string[] finalCommand = new string[fileNames.Length];
-                            for (i = 0; i < fileNames.Length; i++)
-                            {
-                                finalCommand[i] = commandText + " " + filePaths[i] + " " + fileNames[i];
-                            }
-                            try
-                            {
-                                for (i = 0; i < finalCommand.Length; i++)
-                                {
-                                    System.Diagnostics.Process.Start("CMD.exe", finalCommand[i]);
-                                }
-                            }
-                            catch (Exception runException)
-                            {
-                                MessageBox.Show("Unable to run the command" + finalCommand[i]);
-                                try
-                                {
-                                    StreamWriter sw = new StreamWriter(@"C:\Error_Log.txt");
-                                    sw.WriteLine(DateTime.Now);
-                                    sw.WriteLine("-----------------------");
-                                    sw.WriteLine(runException.Message);
-                                    sw.WriteLine("---------------------------------------------------");
-                                    sw.Close();
-                                }
-                                catch (Exception e1)
-                                {
-                                    MessageBox.Show("Exception caused in writing log: " + e1.Message);
-                                }
-                            }
-                        }
-                        else if (dcount < 1 & drcount >= 1 & !String.IsNullOrWhiteSpace(singleFileFullPath))
-                        {
-                            var list = new List<string>();
-                            list.AddRange(dragFileNames);
-                            fileNames = list.ToArray();
-                            var list1 = new List<string>();
-                            list1.AddRange(dragFilePaths);
-                            filePaths = list1.ToArray();
-                            string[] finalCommand = new string[fileNames.Length];
-                            finalCommand[0] = commandText + " " + singleFilePath + " " + singleFileName;
-                            for (i = 1; i <= fileNames.Length; i++)
-                            {
-                                finalCommand[i] = commandText + " " + filePaths[i - 1] + " " + fileNames[i - 1];
-                            }
-                            try
-                            {
-                                for (i = 0; i < finalCommand.Length; i++)
-                                {
-                                    System.Diagnostics.Process.Start("CMD.exe", finalCommand[i]);
-                                }
-                            }
-                            catch (Exception runException)
-                            {
-                                MessageBox.Show("Unable to run the command" + finalCommand[i]);
-                                try
-                                {
-                                    StreamWriter sw = new StreamWriter(@"C:\Error_Log.txt");
-                                    sw.WriteLine(DateTime.Now);
-                                    sw.WriteLine("-----------------------");
-                                    sw.WriteLine(runException.Message);
-                                    sw.WriteLine("---------------------------------------------------");
-                                    sw.Close();
-                                }
-                                catch (Exception e1)
-                                {
-                                    MessageBox.Show("Exception caused in writing log: " + e1.Message);
-                                }
-                            }
-                        }
-                        else if (dcount >= 1 & drcount < 1 & !String.IsNullOrWhiteSpace(singleFileFullPath))
-                        {
-                            var list = new List<string>();
-                            list.AddRange(directoryFileNames);
-                            fileNames = list.ToArray();
-                            var list1 = new List<string>();
-                            list1.AddRange(directoryFilePaths);
-                            filePaths = list1.ToArray();
-                            string[] finalCommand = new string[fileNames.Length];
-                            finalCommand[0] = commandText + " " + singleFilePath + " " + singleFileName;
-                            for (i = 1; i <= fileNames.Length; i++)
-                            {
-                                finalCommand[i] = commandText + " " + filePaths[i - 1] + " " + fileNames[i - 1];
-                            }
-                            try
-                            {
-                                for (i = 0; i < finalCommand.Length; i++)
-                                {
-                                    System.Diagnostics.Process.Start("CMD.exe", finalCommand[i]);
-                                }
-                            }
-                            catch (Exception runException)
-                            {
-                                MessageBox.Show("Unable to run the command" + finalCommand[i]);
-                                try
-                                {
-                                    StreamWriter sw = new StreamWriter(@"C:\Error_Log.txt");
-                                    sw.WriteLine(DateTime.Now);
-                                    sw.WriteLine("-----------------------");
-                                    sw.WriteLine(runException.Message);
-                                    sw.WriteLine("---------------------------------------------------");
-                                    sw.Close();
-                                }
-                                catch (Exception e1)
-                                {
-                                    MessageBox.Show("Exception caused in writing log: " + e1.Message);
-                                }
-                            }
-                        }
-                        else if (dcount >= 1 & drcount >= 1 & String.IsNullOrWhiteSpace(singleFileFullPath))
-                        {
-                            var list = new List<string>();
-                            list.AddRange(directoryFileNames);
-                            list.AddRange(dragFileNames);
-                            fileNames = list.ToArray();
-                            var list1 = new List<string>();
-                            list1.AddRange(directoryFilePaths);
-                            list1.AddRange(dragFilePaths);
-                            filePaths = list1.ToArray();
-                            string[] finalCommand = new string[fileNames.Length];
-                            for (i = 0; i < fileNames.Length; i++)
-                            {
-                                finalCommand[i] = commandText + " " + filePaths[i] + " " + fileNames[i];
-                            }
-                            try
-                            {
-                                for (i = 0; i < finalCommand.Length; i++)
-                                {
-                                    System.Diagnostics.Process.Start("CMD.exe", finalCommand[i]);
-                                }
-                            }
-                            catch (Exception runException)
-                            {
-                                MessageBox.Show("Unable to run the command" + finalCommand[i]);
-                                try
-                                {
-                                    StreamWriter sw = new StreamWriter(@"C:\Error_Log.txt");
-                                    sw.WriteLine(DateTime.Now);
-                                    sw.WriteLine("-----------------------");
-                                    sw.WriteLine(runException.Message);
-                                    sw.WriteLine("---------------------------------------------------");
-                                    sw.Close();
-                                }
-                                catch (Exception e1)
-                                {
-                                    MessageBox.Show("Exception caused in writing log: " + e1.Message);
-                                }
-                            }
-                        }
+                            }                        
                     }
                     else
                     {
-                        MessageBox.Show("No command file was pasted");
+                        MessageBox.Show("No command file was pasted", "Missing Information");
                     }
                 }
                 else
                 {
-                    MessageBox.Show("User cancelled running the batch command.");
+                    MessageBox.Show("User cancelled running the batch command", "Cancelled Operation");
                 }
             }
         }
@@ -380,18 +143,9 @@ namespace FirstProject
 
             if (dragFileDialog.ShowDialog() == DialogResult.OK)
             {
-                dragFiles = dragFileDialog.FileNames;
-                drcount = dragFiles.Length;
-                string[] d1 = new string[drcount];
-                string[] d2 = new string[drcount];
-                for (i = 0; i < drcount; i++)
-                {
-                    d1[i] = Path.GetDirectoryName(dragFiles[i]);
-                    d2[i] = Path.GetFileName(dragFiles[i]);
-                }
-                dragFilePaths = (string[])d1.Clone();
-                dragFileNames = (string[])d2.Clone();
-                foreach (string item in dragFiles)
+                dragBtnFiles = dragFileDialog.FileNames;
+                drcount = dragBtnFiles.Length;
+                foreach (string item in dragBtnFiles)
                 {
                     filesListView.Items.Add(item);
                 }
@@ -417,6 +171,7 @@ namespace FirstProject
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
                 dragFiles = (string[])(e.Data.GetData(DataFormats.FileDrop));
+                drcount = dragFiles.Length;
             }
             foreach (string item in dragFiles)
             {
