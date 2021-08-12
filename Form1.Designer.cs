@@ -75,7 +75,7 @@ namespace FirstProject
             this.SingleFilebtn.Cursor = System.Windows.Forms.Cursors.Hand;
             this.SingleFilebtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.SingleFilebtn.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-            this.SingleFilebtn.Location = new System.Drawing.Point(66, 279);
+            this.SingleFilebtn.Location = new System.Drawing.Point(68, 281);
             this.SingleFilebtn.Margin = new System.Windows.Forms.Padding(0);
             this.SingleFilebtn.Name = "SingleFilebtn";
             this.SingleFilebtn.Size = new System.Drawing.Size(355, 55);
@@ -91,7 +91,7 @@ namespace FirstProject
             this.folderSelectorbtn.Cursor = System.Windows.Forms.Cursors.Hand;
             this.folderSelectorbtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.folderSelectorbtn.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-            this.folderSelectorbtn.Location = new System.Drawing.Point(66, 548);
+            this.folderSelectorbtn.Location = new System.Drawing.Point(68, 550);
             this.folderSelectorbtn.Margin = new System.Windows.Forms.Padding(0);
             this.folderSelectorbtn.Name = "folderSelectorbtn";
             this.folderSelectorbtn.Size = new System.Drawing.Size(355, 55);
@@ -123,7 +123,7 @@ namespace FirstProject
             this.Drag_Button.Cursor = System.Windows.Forms.Cursors.SizeAll;
             this.Drag_Button.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.Drag_Button.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-            this.Drag_Button.Location = new System.Drawing.Point(66, 351);
+            this.Drag_Button.Location = new System.Drawing.Point(68, 353);
             this.Drag_Button.Margin = new System.Windows.Forms.Padding(0);
             this.Drag_Button.Name = "Drag_Button";
             this.Drag_Button.Size = new System.Drawing.Size(355, 175);
@@ -166,7 +166,7 @@ namespace FirstProject
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("MS Reference Sans Serif", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(66, 247);
+            this.label1.Location = new System.Drawing.Point(68, 249);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(370, 19);
             this.label1.TabIndex = 21;
@@ -175,6 +175,7 @@ namespace FirstProject
             // button1
             // 
             this.button1.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button1.Location = new System.Drawing.Point(738, 641);
             this.button1.Margin = new System.Windows.Forms.Padding(0);
             this.button1.Name = "button1";
@@ -199,7 +200,7 @@ namespace FirstProject
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.LightBlue;
-            this.ClientSize = new System.Drawing.Size(1204, 715);
+            this.ClientSize = new System.Drawing.Size(1212, 728);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label1);
@@ -214,7 +215,9 @@ namespace FirstProject
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Form1";
+            this.Padding = new System.Windows.Forms.Padding(2);
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Batch Command Tool";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.topPanel.ResumeLayout(false);
