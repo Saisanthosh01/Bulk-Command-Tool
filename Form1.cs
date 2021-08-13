@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 
@@ -10,8 +11,8 @@ namespace FirstProject
         public string[] fileNames = Array.Empty<string>();
         public string[] filePaths = Array.Empty<string>();
         public int dcount = 0, drcount = 0, i, count;
-        public string singleFilePath,  folderPath, commandText;
-        public string[] directoryFiles,  dragFiles, dragBtnFiles, dragFilePaths, dragFileNames ;
+        public string singleFilePath, folderPath, commandText;
+        public string[] directoryFiles, dragFiles, dragBtnFiles, dragFilePaths, dragFileNames;
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -39,7 +40,7 @@ namespace FirstProject
 
             if (singleFileDialog.ShowDialog() == DialogResult.OK)
             {
-                singleFilePath = singleFileDialog.FileName;                
+                singleFilePath = singleFileDialog.FileName;
                 filesListView.Items.Add(singleFilePath);
             }
         }
@@ -79,43 +80,61 @@ namespace FirstProject
                     {
                         Array.Resize(ref fileNames, filesListView.Items.Count);
                         Array.Resize(ref filePaths, filesListView.Items.Count);
-                        for (i=0;i<fileNames.Length;i++)
+                        for (i = 0; i < fileNames.Length; i++)
                         {
-                            fileNames[i] =filesListView.Items[i].Text;
+                            fileNames[i] = filesListView.Items[i].Text;
                             fileNames[i] = Path.GetFileName(fileNames[i]);
                             filePaths[i] = filesListView.Items[i].Text;
-                            filePaths[i]= Path.GetDirectoryName(filePaths[i]);
+                            filePaths[i] = Path.GetDirectoryName(filePaths[i]);
                         }
-                            string[] finalCommand = new string[fileNames.Length];
-                            for (i = 0; i < fileNames.Length; i++)
+                        //string[] finalCommand = new string[fileNames.Length];
+                        //for (i = 0; i < fileNames.Length; i++)
+                        //{
+                        //    finalCommand[i] = commandText + " " + filePaths[i] + " " + fileNames[i];
+                        //}
+                        try
+                        {
+                            //for (i = 0; i < finalCommand.Length; i++)
+                            for (i = 0; i < filesListView.Items.Count; i++)
                             {
-                                finalCommand[i] = commandText + " " + filePaths[i] + " " + fileNames[i];
+                                var process = new Process
+                                {
+                                    StartInfo = {
+                                        Arguments = string.Format("\"{0}\" \"{1}\"",
+                                                filePaths[i],
+                                                fileNames[i])
+                                         //Arguments = string.Format("\"{0}\" \"{1}\"",
+                                         //       filesListView.Items[i].Text,
+                                         //       filePaths[i+1])
+                                    }
+
+                                };
+                                process.StartInfo.CreateNoWindow = true;
+                                process.StartInfo.UseShellExecute = false;
+                                process.StartInfo.FileName = commandText;
+                                process.Start();
+                                process.Close();
+                                //System.Diagnostics.Process.Start("CMD.exe", finalCommand[i]);
+                                //MessageBox.Show(finalCommand[i]);
                             }
+                        }
+                        catch (Exception runException)
+                        {
+                            MessageBox.Show("Unable to run the command" + filesListView.Items[i].Text, "Error");
                             try
                             {
-                                for (i = 0; i < finalCommand.Length; i++)
-                                {
-                                System.Diagnostics.Process.Start("CMD.exe", finalCommand[i]);
-                                //MessageBox.Show(finalCommand[i]);
-                                }
+                                StreamWriter sw = new StreamWriter(@"C:\Apps\Error_Log.txt");
+                                sw.WriteLine(DateTime.Now);
+                                sw.WriteLine("-----------------------");
+                                sw.WriteLine(runException.Message);
+                                sw.WriteLine("---------------------------------------------------");
+                                sw.Close();
                             }
-                            catch (Exception runException)
+                            catch (Exception e1)
                             {
-                                MessageBox.Show("Unable to run the command" + finalCommand[i], "Error");
-                                try
-                                {
-                                    StreamWriter sw = new StreamWriter(@"C:\Error_Log.txt");
-                                    sw.WriteLine(DateTime.Now);
-                                    sw.WriteLine("-----------------------");
-                                    sw.WriteLine(runException.Message);
-                                    sw.WriteLine("---------------------------------------------------");
-                                    sw.Close();
-                                }
-                                catch (Exception e1)
-                                {
-                                    MessageBox.Show("Exception caused in writing log: " + e1.Message, "Warning");
-                                }
-                            }                        
+                                MessageBox.Show("Exception caused in writing log: " + e1.Message, "Warning");
+                            }
+                        }
                     }
                     else
                     {
