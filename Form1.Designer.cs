@@ -42,6 +42,9 @@ namespace FirstProject
             this.label1 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.label3 = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
             this.topPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -73,6 +76,8 @@ namespace FirstProject
             this.SingleFilebtn.AutoSize = true;
             this.SingleFilebtn.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.SingleFilebtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.SingleFilebtn.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaption;
+            this.SingleFilebtn.FlatAppearance.BorderSize = 0;
             this.SingleFilebtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.SingleFilebtn.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
             this.SingleFilebtn.Location = new System.Drawing.Point(68, 281);
@@ -89,6 +94,8 @@ namespace FirstProject
             this.folderSelectorbtn.AutoSize = true;
             this.folderSelectorbtn.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.folderSelectorbtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.folderSelectorbtn.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaption;
+            this.folderSelectorbtn.FlatAppearance.BorderSize = 0;
             this.folderSelectorbtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.folderSelectorbtn.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
             this.folderSelectorbtn.Location = new System.Drawing.Point(68, 550);
@@ -104,6 +111,8 @@ namespace FirstProject
             // 
             this.Run_Btn.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.Run_Btn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Run_Btn.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaption;
+            this.Run_Btn.FlatAppearance.BorderSize = 0;
             this.Run_Btn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.Run_Btn.Location = new System.Drawing.Point(299, 641);
             this.Run_Btn.Margin = new System.Windows.Forms.Padding(0);
@@ -121,6 +130,8 @@ namespace FirstProject
             this.Drag_Button.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.Drag_Button.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.Drag_Button.Cursor = System.Windows.Forms.Cursors.SizeAll;
+            this.Drag_Button.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaption;
+            this.Drag_Button.FlatAppearance.BorderSize = 0;
             this.Drag_Button.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.Drag_Button.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
             this.Drag_Button.Location = new System.Drawing.Point(68, 353);
@@ -176,6 +187,8 @@ namespace FirstProject
             // 
             this.button1.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button1.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaption;
+            this.button1.FlatAppearance.BorderSize = 0;
             this.button1.Location = new System.Drawing.Point(738, 641);
             this.button1.Margin = new System.Windows.Forms.Padding(0);
             this.button1.Name = "button1";
@@ -193,6 +206,35 @@ namespace FirstProject
             this.panel1.Size = new System.Drawing.Size(1, 325);
             this.panel1.TabIndex = 23;
             // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(91, 768);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(553, 29);
+            this.progressBar1.TabIndex = 24;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(91, 745);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(222, 20);
+            this.label3.TabIndex = 25;
+            this.label3.Text = "Progress of command execution";
+            // 
+            // button2
+            // 
+            this.button2.AutoSize = true;
+            this.button2.BackColor = System.Drawing.Color.PaleTurquoise;
+            this.button2.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.button2.Location = new System.Drawing.Point(823, 768);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(222, 30);
+            this.button2.TabIndex = 26;
+            this.button2.Text = "Click to Restart the application";
+            this.button2.UseVisualStyleBackColor = false;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // Form1
             // 
             this.AllowDrop = true;
@@ -200,7 +242,10 @@ namespace FirstProject
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.LightBlue;
-            this.ClientSize = new System.Drawing.Size(1212, 728);
+            this.ClientSize = new System.Drawing.Size(1212, 828);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label1);
@@ -238,6 +283,9 @@ namespace FirstProject
         private Label label1;
         private Button button1;
         private Panel panel1;
+        private ProgressBar progressBar1;
+        private Label label3;
+        private Button button2;
     }
 }
 

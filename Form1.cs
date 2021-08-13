@@ -14,9 +14,17 @@ namespace FirstProject
         public string singleFilePath, folderPath, commandText;
         public string[] directoryFiles, dragFiles, dragBtnFiles, dragFilePaths, dragFileNames;
 
+        //App restart button
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Application.Restart();
+        }
+
         private void Form1_Load(object sender, EventArgs e)
         {
             filesListView.Columns.Add("Files Selected", 610, HorizontalAlignment.Left);
+            label3.Hide();
+            progressBar1.Hide();
         }
 
         //Clear All files button
@@ -25,6 +33,8 @@ namespace FirstProject
             filesListView.Clear();
             commandTxt.Text = string.Empty;
             filesListView.Columns.Add("Files Selected", 610, HorizontalAlignment.Left);
+            label3.Hide();
+            progressBar1.Hide();
         }
 
         //Single file selection button
@@ -80,46 +90,47 @@ namespace FirstProject
                     {
                         Array.Resize(ref fileNames, filesListView.Items.Count);
                         Array.Resize(ref filePaths, filesListView.Items.Count);
-                        for (i = 0; i < fileNames.Length; i++)
+                        count = fileNames.Length;
+                        for (i = 0; i < count; i++)
                         {
                             fileNames[i] = filesListView.Items[i].Text;
                             fileNames[i] = Path.GetFileName(fileNames[i]);
                             filePaths[i] = filesListView.Items[i].Text;
                             filePaths[i] = Path.GetDirectoryName(filePaths[i]);
                         }
-                        //string[] finalCommand = new string[fileNames.Length];
-                        //for (i = 0; i < fileNames.Length; i++)
-                        //{
-                        //    finalCommand[i] = commandText + " " + filePaths[i] + " " + fileNames[i];
-                        //}
+                        string[] finalCommand = new string[count];
+                        string[] commands = new string[count];
+
+                        for (i = 0; i < count; i++)
+                        {
+                            commands[i] = commandText;
+                            commands[i] = commands[i].Replace("%filename%", fileNames[i], StringComparison.CurrentCultureIgnoreCase);
+                            commands[i] = commands[i].Replace("%filepath%", filePaths[i], StringComparison.CurrentCultureIgnoreCase);
+                            finalCommand[i] = commands[i];
+                        }
+
                         try
                         {
-                            //for (i = 0; i < finalCommand.Length; i++)
-                            for (i = 0; i < filesListView.Items.Count; i++)
+                            for (i = 0; i < count; i++)
                             {
-                                var process = new Process
-                                {
-                                    StartInfo = {
-                                        Arguments = string.Format("\"{0}\" \"{1}\"",
-                                                filePaths[i],
-                                                fileNames[i])
-                                         //Arguments = string.Format("\"{0}\" \"{1}\"",
-                                         //       filesListView.Items[i].Text,
-                                         //       filePaths[i+1])
-                                    }
-                                };
-                                process.StartInfo.CreateNoWindow = true;
-                                process.StartInfo.UseShellExecute = false;
-                                process.StartInfo.FileName = commandText;
+                                var process = new Process();
+                                process.StartInfo.CreateNoWindow = false;
+                                process.StartInfo.UseShellExecute = true;
+                                process.StartInfo.FileName = finalCommand[i];
                                 process.Start();
                                 process.Close();
+                                progressBar1.Show();
+                                label3.Show();
+                                progressBar1.Minimum = 1;
+                                progressBar1.Maximum = count;
+                                progressBar1.Value = i + 1;
                                 //System.Diagnostics.Process.Start("CMD.exe", finalCommand[i]);
                                 //MessageBox.Show(finalCommand[i]);
                             }
                         }
                         catch (Exception runException)
                         {
-                            MessageBox.Show("Unable to run the command" + filesListView.Items[i].Text, "Error");
+                            MessageBox.Show("Unable to run the command on file" + fileNames[i], "Error");
                             try
                             {
                                 StreamWriter sw = new StreamWriter(@"C:\Apps\Error_Log.txt");
@@ -128,6 +139,8 @@ namespace FirstProject
                                 sw.WriteLine(runException.Message);
                                 sw.WriteLine("---------------------------------------------------");
                                 sw.Close();
+                                MessageBox.Show(@"Check failure log under C:\Apps\Error_Log.txt", "Information");
+                                Application.Restart();
                             }
                             catch (Exception e1)
                             {
