@@ -117,7 +117,7 @@ namespace FirstProject
                                 Process process;
                                 processInfo = new ProcessStartInfo("cmd.exe", "/c " + finalCommand[i]);
                                 processInfo.CreateNoWindow = true;
-                                processInfo.UseShellExecute = false;
+                                processInfo.UseShellExecute = true;
                                 process = Process.Start(processInfo);
                                 process.Close();                               
                                 progressBar1.Show();
