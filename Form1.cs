@@ -113,20 +113,35 @@ namespace FirstProject
                         {
                             for (i = 0; i < count; i++)
                             {
-                                var process = new Process();
-                                process.StartInfo.CreateNoWindow = false;
-                                process.StartInfo.UseShellExecute = true;
-                                process.StartInfo.FileName = finalCommand[i];
-                                process.Start();
-                                process.Close();
+                                ProcessStartInfo processInfo;
+                                Process process;
+                                processInfo = new ProcessStartInfo("cmd.exe", "/c " + finalCommand[i]);
+                                processInfo.CreateNoWindow = true;
+                                processInfo.UseShellExecute = false;
+                                process = Process.Start(processInfo);
+                                process.Close();                               
                                 progressBar1.Show();
                                 label3.Show();
                                 progressBar1.Minimum = 1;
                                 progressBar1.Maximum = count;
                                 progressBar1.Value = i + 1;
-                                //System.Diagnostics.Process.Start("CMD.exe", finalCommand[i]);
-                                //MessageBox.Show(finalCommand[i]);
                             }
+                            //for (i = 0; i < count; i++)
+                            //{
+                            //    var process = new Process();
+                            //    process.StartInfo.CreateNoWindow = false;
+                            //    process.StartInfo.UseShellExecute = true;
+                            //    process.StartInfo.FileName = finalCommand[i];
+                            //    process.Start();
+                            //    process.Close();
+                            //    progressBar1.Show();
+                            //    label3.Show();
+                            //    progressBar1.Minimum = 1;
+                            //    progressBar1.Maximum = count;
+                            //    progressBar1.Value = i + 1;
+                            //    //System.Diagnostics.Process.Start("CMD.exe", finalCommand[i]);
+                            //    //MessageBox.Show(finalCommand[i]);
+                            //}
                         }
                         catch (Exception runException)
                         {
@@ -136,7 +151,7 @@ namespace FirstProject
                                 StreamWriter sw = new StreamWriter(@"C:\Apps\Error_Log.txt");
                                 sw.WriteLine(DateTime.Now);
                                 sw.WriteLine("-----------------------");
-                                sw.WriteLine(runException.Message);
+                                sw.WriteLine(runException);
                                 sw.WriteLine("---------------------------------------------------");
                                 sw.Close();
                                 MessageBox.Show(@"Check failure log under C:\Apps\Error_Log.txt", "Information");
