@@ -122,9 +122,13 @@ namespace FirstProject
                                 process.Close();                               
                                 progressBar1.Show();
                                 label3.Show();
-                                progressBar1.Minimum = 1;
+                                progressBar1.Minimum = 0;
                                 progressBar1.Maximum = count;
                                 progressBar1.Value = i + 1;
+                                if(i== count - 1)
+                                {
+                                    MessageBox.Show("Completed executing the commands", "Completion Message");
+                                }
                             }
                             //for (i = 0; i < count; i++)
                             //{
