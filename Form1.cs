@@ -119,6 +119,7 @@ namespace FirstProject
                                 processInfo.CreateNoWindow = true;
                                 processInfo.UseShellExecute = true;
                                 process = Process.Start(processInfo);
+                                process.WaitForExit();
                                 process.Close();                               
                                 progressBar1.Show();
                                 label3.Show();
