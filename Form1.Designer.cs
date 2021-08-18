@@ -113,7 +113,7 @@ namespace FirstProject
             this.Run_Btn.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaption;
             this.Run_Btn.FlatAppearance.BorderSize = 0;
             this.Run_Btn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.Run_Btn.Location = new System.Drawing.Point(299, 641);
+            this.Run_Btn.Location = new System.Drawing.Point(279, 647);
             this.Run_Btn.Margin = new System.Windows.Forms.Padding(0);
             this.Run_Btn.Name = "Run_Btn";
             this.Run_Btn.Size = new System.Drawing.Size(400, 50);
@@ -175,10 +175,10 @@ namespace FirstProject
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("MS Reference Sans Serif", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(68, 249);
+            this.label1.Font = new System.Drawing.Font("MS Reference Sans Serif", 9F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point);
+            this.label1.Location = new System.Drawing.Point(36, 248);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(370, 19);
+            this.label1.Size = new System.Drawing.Size(419, 19);
             this.label1.TabIndex = 21;
             this.label1.Text = "Input files by one or all or any of below methods";
             // 
@@ -188,7 +188,7 @@ namespace FirstProject
             this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button1.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaption;
             this.button1.FlatAppearance.BorderSize = 0;
-            this.button1.Location = new System.Drawing.Point(738, 641);
+            this.button1.Location = new System.Drawing.Point(718, 647);
             this.button1.Margin = new System.Windows.Forms.Padding(0);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(100, 50);
@@ -207,7 +207,7 @@ namespace FirstProject
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(233, 758);
+            this.progressBar1.Location = new System.Drawing.Point(217, 758);
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(553, 29);
             this.progressBar1.TabIndex = 24;
@@ -215,9 +215,10 @@ namespace FirstProject
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(233, 735);
+            this.label3.Font = new System.Drawing.Font("MS Reference Sans Serif", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point);
+            this.label3.Location = new System.Drawing.Point(217, 736);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(222, 20);
+            this.label3.Size = new System.Drawing.Size(251, 19);
             this.label3.TabIndex = 25;
             this.label3.Text = "Progress of command execution";
             // 
@@ -243,7 +244,6 @@ namespace FirstProject
             this.Controls.Add(this.topPanel);
             this.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.MaximizeBox = false;
-            this.MinimizeBox = false;
             this.Name = "Form1";
             this.Padding = new System.Windows.Forms.Padding(2);
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;

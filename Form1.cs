@@ -13,13 +13,8 @@ namespace FirstProject
         public int dcount = 0, drcount = 0, i, count;
         public string singleFilePath, folderPath, commandText;
         public string[] directoryFiles, dragFiles, dragBtnFiles, dragFilePaths, dragFileNames;
-
-        //App restart button
-        private void button2_Click(object sender, EventArgs e)
-        {
-            Application.Restart();
-        }
-
+       
+        //Initial Form Load
         private void Form1_Load(object sender, EventArgs e)
         {
             filesListView.Columns.Add("Files Selected", 610, HorizontalAlignment.Left);
@@ -72,7 +67,7 @@ namespace FirstProject
             }
         }
 
-        //Final Run button
+        //Run button
         private void Run_Btn_Click(object sender, EventArgs e)
         {
             commandText = commandTxt.Text.ToString().Trim();
@@ -91,21 +86,29 @@ namespace FirstProject
                         Array.Resize(ref fileNames, filesListView.Items.Count);
                         Array.Resize(ref filePaths, filesListView.Items.Count);
                         count = fileNames.Length;
+                        string[] prefix = new string[count];
+                        string[] suffix = new string[count];
+                        string[] finalCommand = new string[count];
+                        string[] commands = new string[count];
                         for (i = 0; i < count; i++)
                         {
                             fileNames[i] = filesListView.Items[i].Text;
                             fileNames[i] = Path.GetFileName(fileNames[i]);
+                            prefix[i] = filesListView.Items[i].Text;
+                            prefix[i] = Path.GetFileNameWithoutExtension(prefix[i]);
+                            suffix[i] = filesListView.Items[i].Text;
+                            suffix[i] = Path.GetExtension(suffix[i]);
                             filePaths[i] = filesListView.Items[i].Text;
                             filePaths[i] = Path.GetDirectoryName(filePaths[i]);
-                        }
-                        string[] finalCommand = new string[count];
-                        string[] commands = new string[count];
+                        }                       
 
                         for (i = 0; i < count; i++)
                         {
                             commands[i] = commandText;
                             commands[i] = commands[i].Replace("%filename%", fileNames[i], StringComparison.CurrentCultureIgnoreCase);
                             commands[i] = commands[i].Replace("%filepath%", filePaths[i], StringComparison.CurrentCultureIgnoreCase);
+                            commands[i] = commands[i].Replace("%prefix%", prefix[i], StringComparison.CurrentCultureIgnoreCase);
+                            commands[i] = commands[i].Replace("%suffix%", suffix[i], StringComparison.CurrentCultureIgnoreCase);
                             finalCommand[i] = commands[i];
                         }
 
@@ -120,7 +123,7 @@ namespace FirstProject
                                 processInfo.UseShellExecute = true;
                                 process = Process.Start(processInfo);
                                 process.WaitForExit();
-                                process.Close();                               
+                                process.Close();
                                 progressBar1.Show();
                                 label3.Show();
                                 progressBar1.Minimum = 0;
